@@ -1,16 +1,18 @@
-FROM ubuntu
+FROM alpine
 
-LABEL maintainer="jonifen"
+LABEL maintainer="Jnowakoski15"
 
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y vim zip curl mono-complete && \
+ENV VERSION=1432
+
+RUN apk update && \
+    apk upgrade -y && \
+    apk install -y vim zip curl mono-complete && \
     apt-get clean
 
 RUN mkdir /tmp/terraria && \
     cd /tmp/terraria && \
-    curl -sL https://www.terraria.org/system/dedicated_servers/archives/000/000/039/original/terraria-server-1405.zip --output terraria-server-1405.zip && \
-    unzip -q terraria-server-1405.zip && \
+    curl -sL https://terraria.org/api/download/pc-dedicated-server/terraria-server-${VERSION}.zip --output terraria-server-${VERSION}.zip && \
+    unzip -q terraria-server-${VERSION}.zip && \
     mv */Linux /terraria && \
     rm -R /tmp/* && \
     rm /terraria/Mono.* && \
