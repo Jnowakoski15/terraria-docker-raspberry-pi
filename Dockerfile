@@ -7,7 +7,7 @@ ENV VERSION=1432
 RUN apk update && \
     apk upgrade -y && \
     apk install -y vim zip curl mono-complete && \
-    apt-get clean
+    apk clean
 
 RUN mkdir /tmp/terraria && \
     cd /tmp/terraria && \
@@ -21,7 +21,5 @@ RUN mkdir /tmp/terraria && \
     chmod +x /terraria/TerrariaServer* && \
     if [ ! -f /terraria/TerrariaServer ]; then echo "Missing /terraria/TerrariaServer"; exit 1; fi
 
-COPY run-server.sh /terraria/run.sh
-
 WORKDIR /terraria
-CMD ["./run.sh"]
+CMD ["mono", "TerrariaServer.exe", "-config", "/terraria/configs/serverconfig.txt", "-autocreate", "1"]
